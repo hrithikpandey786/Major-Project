@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Department{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String @unique
+  course Course[]
+}
+
+model Course{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  deptId String @db.ObjectId
+  department Department @relation(fields: [deptId], references: [id])
+  name String
+}
+
+model EnrolledStudent{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  enrolmentNo Int @unique
+  name String
+  dob DateTime @db.Date 
+}
+
+model Student{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  enrolmentNo Int @unique
+  name String
+  dob DateTime @db.Date
+  email String @unique
+  phoneNumber Int @unique
+  department String
+  course String
+  admissionYear Int
+  resultDate DateTime @db.Date
+  status String @default("Pending")
+  address String
+  pincode Int
+  password String
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// model PhoneNumber{
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   departmentId String @db.ObjectId
+//   number Int @unique
+//   department Department @relation(fields:[departmentId], references: [id])
+// }
+
+// model Admin{
+//   id String @id @default(auto()) @map("_id") @db.ObjectId
+//   name String
+//   email String @unique
+//   phoneNumber Int @unique
+//   department String
+//   position String
+//   password String
+//   createdAt DateTime @default(now())
+// }
