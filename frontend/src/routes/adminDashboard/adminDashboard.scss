@@ -1,8 +1,10 @@
 .adminDashboard{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+    overflow: scroll;
+    height: 100%;
 
     h3{
         font-family: Inter;
@@ -16,7 +18,7 @@
     .tableContainer{
         // background-color: gray;
         // max-width: 1200px;
-        min-width: 800px;
+        min-width: 1000px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -35,6 +37,21 @@
           }
     }
 
+    button{
+      padding: 12px 20px;
+      color: white;
+      background-color: black;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:disabled{
+        cursor: not-allowed;
+      }
+    }
+
+    span{
+      color: red;
+    }
 }
 
 

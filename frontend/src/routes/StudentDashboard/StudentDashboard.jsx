@@ -15,6 +15,8 @@ function StudentDashboard() {
                 enrollmentNo: '654321',
                 dob: '1999-01-01',
                 gender: 'Male',
+                email: "hrithik@gmail.com",
+                phoneNumber: "100019893",
                 course: 'MCA',
                 branch: 'Information Technology'
             };
@@ -36,14 +38,16 @@ function StudentDashboard() {
     return (
         <div className="student-dashboard-container">
             <div className="student-info">
-                <h2>Student Information</h2>
+                <h2>Apply for Degree</h2>
                 <p><strong>Name:</strong> {studentInfo.name}</p>
                 <p><strong>Roll No:</strong> {studentInfo.rollNo}</p>
                 <p><strong>Enrollment No:</strong> {studentInfo.enrollmentNo}</p>
                 <p><strong>Date of Birth:</strong> {studentInfo.dob}</p>
                 <p><strong>Gender:</strong> {studentInfo.gender}</p>
-                <p><strong>Course:</strong> {studentInfo.course}</p>
-                <p><strong>Branch:</strong> {studentInfo.branch}</p>
+                <p><strong>Email:</strong> {studentInfo.email}</p>
+                <p><strong>Phone Number:</strong> {studentInfo.phoneNumber}</p>
+                <p><strong>Department:</strong> {studentInfo.course}</p>
+                <p><strong>Course:</strong> {studentInfo.branch}</p>
                 <form>
                 <div className="item">
                         <label htmlFor="resultDate">Result Date:</label>
@@ -105,7 +109,7 @@ function StudentDashboard() {
                                 onChange={handleChange}
                                 required
                             />
-                        <label htmlFor="">Yes</label>
+                        <label htmlFor="yes">Yes</label>
                     </div>
                     <div>
                             <input
@@ -132,6 +136,7 @@ function StudentDashboard() {
                 <h2>Options</h2>
                 <button onClick={() => alert('Apply for Degree clicked!')}>Apply for Degree</button>
                 <button onClick={() => alert('Check Status clicked!')}>Check Status</button>
+                <button onClick={() => alert('Check Status clicked!')}>Logout</button>
             </div>
         </div>
     );

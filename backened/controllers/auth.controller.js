@@ -83,22 +83,43 @@ const login = async (req, res)=>{
             return res.status(401).json({message: "Invalid credentials"});
         }
 
-        const token = jwt.sign({id: student.id}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
+        const token = jwt.sign({id: student.id, isAdmin: false}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
         const age = 1000*60*60*24*7
 
-        res.cookie('token', token, {
+        return res.cookie('token', token, {
             httpOnly: true,
             maxAge: age
-        })
-
-        res.status(200).json({message: "Login Successful", student})
+        }).status(200).json(student);
     } catch(err){
         console.log(err);
         res.status(500).json({message: "Failed to login"})
     }
 }
 
+const adminLogin = (req, res)=>{
+    const {username, password} = req.body;
 
+    try{
+        if(username!="admin" || password!="admin"){
+            return res.status(401).json({message: "Invalid Credentials!"});
+        }
+
+        const token = jwt.sign({
+            id: "001",
+            isAdmin: true
+        }, process.env.JWT_SECRET_KEY, {expiresIn: "1h"});
+
+        const age = 1000*60*60*24*7;
+
+        return res.cookie("token", token, {
+            httpOnly: true,
+            maxAge: age
+        }).status(200).json({message: "Login successful"});
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Failed to login"});
+    }
+}
 
 const logout = async (req, res)=>{
     try{
@@ -110,4 +131,4 @@ const logout = async (req, res)=>{
     }
 }
 
-module.exports = {register, login, logout};
+module.exports = {register, login, adminLogin, logout};

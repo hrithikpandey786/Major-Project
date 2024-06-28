@@ -1,24 +1,46 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './studentLogin.scss';
+import apiRequest from '../../../lib/apiRequest.js';
+import { AuthContext } from '../../../context/AuthContext.jsx';
 
 function StudentLogin() {
-    const [enrolmentNo, setEnrolmentNo] = useState('');
-    const [password, setPassword] = useState('');
+    const {updateUser} = React.useContext(AuthContext);
+    const navigate = useNavigate();
+    const [isDisabled, setIsDisabled] = React.useState(false);
+    const [error, setError] = React.useState("");
 
-    const handleEnrolmentNoChange = (e) => {
-        setEnrolmentNo(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log('Enrolment No:', enrolmentNo);
-        console.log('Password:', password);
+        
+        setError(null);
+        setIsDisabled(true);
+        const formData = new FormData(e.target);
+        const password = formData.get("password");
+        const enrolmentNo = parseInt(formData.get("enrolmentNo"));
+
+        try{
+            
+            const student = await apiRequest.post("/auth/login",{
+                enrolmentNo,
+                password
+            });
+            
+            const data = student.data;
+
+            updateUser({
+                id: data.id,
+                name: data.name,
+                isAdmin: false
+            })
+            
+            navigate("/studentDashboard");
+        } catch(err){
+            console.log(err);
+            setError(err.response.data.message);
+        } finally{
+            setIsDisabled(false);
+        }
     };
 
     return (
@@ -31,8 +53,6 @@ function StudentLogin() {
                     type="text"
                     id="enrolmentNo"
                     name="enrolmentNo"
-                    value={enrolmentNo}
-                    onChange={handleEnrolmentNoChange}
                     required
                 />
                 <label htmlFor="password">Password:</label>
@@ -40,11 +60,10 @@ function StudentLogin() {
                     type="password"
                     id="password"
                     name="password"
-                    value={password}
-                    onChange={handlePasswordChange}
                     required
                 />
-                <input type="submit" value="Login" />
+                <button disabled={isDisabled}>Submit</button>
+                {error && <span>{error}</span>}
             </form>
             <div className="bottom">
                 Don't have an account? <Link to="/register">Register now</Link>

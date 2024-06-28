@@ -1,31 +1,46 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./registerPage.scss";
+import axios from "axios";
+
 
 export default function RegisterPage(){
-        
+    const navigate = useNavigate();
     const [department, setDepartment] = React.useState("");
+    const [error, setError] = React.useState("");
 
     function handleChange(e){
         setDepartment(e.target.value);
 
     }
     
-        const handleSubmit = (e) => {
-            e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
             
-            const formData = new FormData(e.target);
-            const inputs = Object.fromEntries(formData);
-            console.log(inputs);
-        };
-    
-        // const branches = {
-        //     'Information Technology': ['MCA', 'M.TECh'],
-        //     'B.TECH': ['Computer Science', 'Electrical', 'Mechanical', 'Civil'],
-        //     'M.SC': ['Physics', 'Chemistry', 'Mathematics'],
-        //     'B.PHARMA': ['Pharmaceutical Chemistry', 'Pharmacology'],
-        //     'M.TECH': ['Computer Science', 'Electrical', 'Mechanical', 'Civil'],
-        //     'P.HD': ['Computer Science', 'Physics', 'Mathematics']
-        // };
+        const formData = new FormData(e.target);
+        const inputs = Object.fromEntries(formData);
+        setError(null);
+        // console.log(inputs);
+
+        try{
+            const res = await axios.post("http://localhost:8800/api/auth/register", {
+                name: inputs.name,
+                enrolmentNo: parseInt(inputs.enrolmentNo),
+                dob: inputs.dob,
+                email: inputs.email,
+                phoneNumber: parseInt(inputs.phoneNumber),
+                department: inputs.department,
+                course: inputs.course,
+                password: inputs.password,
+                gender: inputs.gender
+            });
+            
+            navigate("/");
+        } catch(err){
+            console.log(err);
+            setError(err.response.data.message);
+        }
+    };
 
         const courses = {
             'Information Technology and Computer Science': ['MCA', 'M.TECH', 'B.TECH'],
@@ -61,12 +76,12 @@ export default function RegisterPage(){
                         </div>
 
                         <div className="item">
-                            <label htmlFor="enrollmentNo">Enrollment No.:</label>
+                            <label htmlFor="enrolmentNo">Enrolment No.:</label>
                             <input
-                                type="text"
-                                id="enrollmentNo"
-                                name="enrollmentNo"
-                                // value={formData.enrollmentNo}
+                                type="number"
+                                id="enrolmentNo"
+                                name="enrolmentNo"
+                                // value={formData.enrolmentNo}
                                 // onChange={handleChange}
                                 required
                             />
@@ -177,6 +192,7 @@ export default function RegisterPage(){
     
                     <button>Register</button>
                 </form>
+                {error && <span>{error}</span>}
                     </div>
                 </div>
                 

@@ -26,6 +26,10 @@
         form {
             display: flex;
             flex-direction: column;
+
+            span{
+                color: red;
+            }
         }
         
         label {
@@ -35,14 +39,14 @@
         
         input[type="text"],
         input[type="password"] {
-            padding: 10px; /* Increased padding */
+            padding: 9px; /* Increased padding */
             margin-bottom: 20px; /* Increased margin */
             border: 1px solid #ccc;
             border-radius: 5px;
             // width: calc(100% - 32px); 
         }
         
-        input[type="submit"] {
+        button {
             padding: 10px; /* Increased padding */
             background-color: black;
             border: none;
@@ -50,6 +54,10 @@
             color: white;
             cursor: pointer;
             width: 90px;
+
+            &:disabled{
+                cursor:not-allowed;
+            }
         }
         
         // input[type="submit"]:hover {

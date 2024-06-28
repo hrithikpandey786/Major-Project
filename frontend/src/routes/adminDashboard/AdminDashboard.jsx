@@ -1,11 +1,32 @@
 import React from "react"
+import { useNavigate } from "react-router-dom";
 // import './App.css';
 // import headerpic from "./image6.png"
 import TableData from "../../components/tableData/TableData.jsx"
 import "./adminDashboard.scss";
+import apiRequest from "../../../lib/apiRequest.js";
+import { AuthContext } from "../../../context/AuthContext.jsx";
 
 
 export default function AdminDashboard(){
+  const [error, setError] = React.useState("");
+  const [isDisabled, setIsDisabled] = React.useState(false);
+  const {updateUser} = React.useContext(AuthContext);
+  const navigate = useNavigate();
+
+  async function handleLogout(){
+    setError(false);
+    setIsDisabled(true);
+
+    try{
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch(err){
+      console.log(err);
+      setError(err.response.data.message);
+    }
+  }
     
     const [studentData, setStudentData] = React.useState([{
         name: "Hrithik",
@@ -39,13 +60,16 @@ export default function AdminDashboard(){
           </thead>
           <tbody>
             {
-              studentData.map(data=>{
-                return <TableData data={data}/>
+              studentData.map((data, index)=>{
+                return <TableData data={data} key={index}/>
               })
             }
           </tbody>
         </table>
         </div>
+
+        <button disabled={isDisabled} onClick={handleLogout}>Logout</button>
+        {error && <span>{error}</span>}
       </div>
     )
 }

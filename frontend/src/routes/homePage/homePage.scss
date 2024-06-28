@@ -8,7 +8,7 @@
     padding: 0;
 
     h1{
-        font-size: 50px;
+        font-size: 45px;
         color: #007bff;
         font-family: "Roboto", sans-serif;
       font-weight: 500;
@@ -34,8 +34,9 @@
     
     .buttons button{
         /* height: 40px; */
-        padding: 13px 13px;
-        font-size: 14px;
+        padding: 10px 10px;
+        font-size: 12px;
+        border: 1px solid black;
         cursor: pointer;
     }
     

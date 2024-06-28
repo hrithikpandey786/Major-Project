@@ -1,23 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './adminLogin.scss';
+import { AuthContext } from '../../../context/AuthContext';
+import apiRequest from '../../../lib/apiRequest';
 
 function AdminLogin() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [error, setError] = React.useState("");
+    const [isDisabled, setIsDisabled] = React.useState(false);
+    const {updateUser} = React.useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle login logic here
-        console.log('Username:', username);
-        console.log('Password:', password);
+        setError(null);
+        setIsDisabled(true);
+        
+        const formData = new FormData(e.target);
+
+        const username = formData.get("username");
+        const password = formData.get("password");
+
+        try{
+            await apiRequest.post("/auth/adminLogin", {
+                username, password
+            })
+
+            updateUser({
+                id: "001",
+                name: "admin",
+                isAdmin: true
+            })
+
+            navigate("adminDashboard");  
+        } catch(err){
+            console.log(err);
+            setError(err.response.data.message);
+        } finally{
+            setIsDisabled(false);
+        }
     };
 
     return (
@@ -30,8 +50,6 @@ function AdminLogin() {
                     type="text"
                     id="username"
                     name="username"
-                    value={username}
-                    onChange={handleUsernameChange}
                     required
                 />
                 <label htmlFor="password">Password:</label>
@@ -39,11 +57,10 @@ function AdminLogin() {
                     type="password"
                     id="password"
                     name="password"
-                    value={password}
-                    onChange={handlePasswordChange}
                     required
                 />
-                <input type="submit" value="Login" />
+                <button disabled={isDisabled}>Submit</button>
+                {error && <span>{error}</span>}
             </form>
             </div>
         </div>
