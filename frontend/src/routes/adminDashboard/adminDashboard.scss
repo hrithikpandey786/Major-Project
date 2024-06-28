@@ -1,0 +1,77 @@
+.adminDashboard{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    h3{
+        font-family: Inter;
+        font-size: 27px;
+        font-weight: 500;
+        line-height: 32.68px;
+        text-align: center;
+        margin-top: 60px;
+      }
+
+    .tableContainer{
+        // background-color: gray;
+        // max-width: 1200px;
+        min-width: 800px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    
+        .table{
+            // width: 1047px;
+            width: 100%;
+            // margin-left: 209px;
+            // margin-top: 15px;
+            border-spacing: 0;
+            border-collapse: collapse; /* Prevents double borders */
+            border: 1px solid black; /* Border for the table */
+            border-radius: 15px; /* Rounded corners for the table */
+            overflow: hidden; /* Needed to hide the overflow of rounded corners */
+          }
+    }
+
+}
+
+
+
+  thead{
+    height: 91px;
+    top: 2390px;
+  }
+  
+  td, th{
+    height: 90px;
+    font-family: Inter;
+    font-weight: bold;
+    font-size: 29px;
+    line-height: 35.1px;
+    text-align: left;
+  
+    padding-left: 15px;
+  }
+  
+  td{
+    font-weight: 500;
+  }
+  
+  th{
+    background: #F5C4C4;
+    overflow: hidden;
+    border: none;
+    color: black;
+  }
+  
+   th:first-child{
+    border-top-left-radius: 17px;
+    border-bottom-left-radius: 17px;
+  }
+  
+  th:last-child{
+    border-top-right-radius: 17px;
+    border-bottom-right-radius: 17px;
+  }

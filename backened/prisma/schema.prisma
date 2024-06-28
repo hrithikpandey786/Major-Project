@@ -33,6 +33,19 @@ model EnrolledStudent{
   dob DateTime @db.Date 
 }
 
+model RegisteredStudent{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  enrolmentNo Int @unique
+  name String
+  dob DateTime @db.Date
+  email String @unique
+  phoneNumber Int @unique
+  department String
+  course String
+  gender String
+  password String
+}
+
 model Student{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   enrolmentNo Int @unique
@@ -42,12 +55,13 @@ model Student{
   phoneNumber Int @unique
   department String
   course String
+  gender String
   admissionYear Int
   resultDate DateTime @db.Date
   status String @default("Pending")
   address String
   pincode Int
-  password String
+  reappearance String
 }
 
 

@@ -6,7 +6,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow: scroll;
+        // overflow: scroll;
+        margin: 0px 50px;
 
         .wrapper{
             display: flex;
@@ -22,12 +23,15 @@
                 gap: 20px;
                 flex-wrap: wrap;
 
+                .inputs{
+                    flex-direction: column;
+                }
                 .gender-container{
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
                     gap: 10px;
-                    
+                    margin-right: 160px;
                 }
 
                 .reappearance{
@@ -61,7 +65,8 @@
                     background-color: black;
                     color: white;
                     border-radius: 5px;
-                    margin: 30px 70px 0px 0px;
+                    // margin: 30px 70px 0px 0px;
+                    margin: 20px auto;
                 }
             }
         }

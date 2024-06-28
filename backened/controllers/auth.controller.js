@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 
 const register = async (req, res)=>{
-    const {enrolmentNo, dob, name, resultDate, password} = req.body
+    const {enrolmentNo, dob, name, password} = req.body
 
     try{
 
@@ -22,7 +22,7 @@ const register = async (req, res)=>{
             return res.status(401).json({message: "Invalid Credentials"})
         }
 
-        const stu = await prisma.student.findUnique({
+        const stu = await prisma.registeredStudent.findUnique({
             where:{
                     enrolmentNo: enrolmentNo    
             }
@@ -34,11 +34,10 @@ const register = async (req, res)=>{
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newStudent = await prisma.student.create({
+        const newStudent = await prisma.registeredStudent.create({
             data:{
                 ...req.body,
                 dob: new Date(dob),
-                resultDate: new Date(resultDate),
                 password: hashedPassword
             }
         })
@@ -68,7 +67,7 @@ const login = async (req, res)=>{
     const {enrolmentNo, password} = req.body;
 
     try{
-        const student = await prisma.student.findUnique({
+        const student = await prisma.registeredStudent.findUnique({
             where:{
                 enrolmentNo
             }

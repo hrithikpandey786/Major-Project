@@ -6,9 +6,9 @@ import "./header.scss";
 export default function Header(){
     return(
         <nav>
-            {/* <Link to="/"> */}
+            <Link to="/">
                 <img src="/image6.png"></img>
-            {/* </Link> */}
+            </Link>
         </nav>
     )
 }

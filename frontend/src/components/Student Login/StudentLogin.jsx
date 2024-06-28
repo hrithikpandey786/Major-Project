@@ -46,10 +46,9 @@ function StudentLogin() {
                 />
                 <input type="submit" value="Login" />
             </form>
-            {/* <div className="bottom">
-                Don't have an account? <Link to="/register">Register now</Link><br></br>
-                Or login as <Link to="/admin">admin</Link>
-            </div> */}
+            <div className="bottom">
+                Don't have an account? <Link to="/register">Register now</Link>
+            </div>
             </div>
             
            
