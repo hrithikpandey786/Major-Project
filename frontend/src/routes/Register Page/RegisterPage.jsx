@@ -6,6 +6,7 @@ import axios from "axios";
 
 export default function RegisterPage(){
     const navigate = useNavigate();
+    const [isDisabled, setIsDisabled] = React.useState(false);
     const [department, setDepartment] = React.useState("");
     const [error, setError] = React.useState("");
 
@@ -16,6 +17,7 @@ export default function RegisterPage(){
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsDisabled(true);
             
         const formData = new FormData(e.target);
         const inputs = Object.fromEntries(formData);
@@ -39,6 +41,8 @@ export default function RegisterPage(){
         } catch(err){
             console.log(err);
             setError(err.response.data.message);
+        } finally{
+            setIsDisabled(false);
         }
     };
 
@@ -180,17 +184,17 @@ export default function RegisterPage(){
                     <div className="gender-container">
                     <p>Gender:</p>
                     <div>
-                    <input type="radio" id="male" name="gender" value="male"></input>
+                    <input type="radio" id="male" name="gender" value="Male"></input>
                       <label htmlFor="male">Male</label>
                     </div>
                     <div>
-                    <input type="radio" id="female" name="gender" value="female"/>
+                    <input type="radio" id="female" name="gender" value="Female"/>
                       <label htmlFor="female">Female</label><br></br>
                     </div>
                     </div>
                     
     
-                    <button>Register</button>
+                    <button disabled={isDisabled}>Register</button>
                 </form>
                 {error && <span>{error}</span>}
                     </div>

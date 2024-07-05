@@ -29,15 +29,15 @@ export default function AdminDashboard(){
   }
     
     const [studentData, setStudentData] = React.useState([{
-        name: "Hrithik",
-        rollNo: 2022073031,
-        address: "Varanasi",
+        name: "Hrithik Pandey",
+        enrolmentNo: 2022071,
+        branch: "B.Tech",
         status: "Requested"
       },
       {
         name: "Anup",
-        rollNo: 2022104018,
-        address: "Gorakhpur",
+        enrolmentNo: 2022108,
+        branch: "MCA",
         status: "Fulfilled"
       }]);
     
@@ -53,8 +53,8 @@ export default function AdminDashboard(){
           <thead>
             <tr>
               <th>NAME</th>
-              <th>ROLL NO</th>
-              <th>ADDRESS</th>
+              <th>ENROLMENT NO</th>
+              <th>BRANCH</th>
               <th>STATUS</th>
             </tr>
           </thead>

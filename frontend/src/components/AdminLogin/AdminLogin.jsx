@@ -19,7 +19,7 @@ function AdminLogin() {
 
         const username = formData.get("username");
         const password = formData.get("password");
-
+        
         try{
             await apiRequest.post("/auth/adminLogin", {
                 username, password

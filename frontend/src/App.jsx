@@ -4,6 +4,8 @@ import RegisterPage from "./routes/Register Page/RegisterPage";
 import StudentDasboard from "./routes/StudentDashboard/StudentDashboard";
 import AdminDashboard from "./routes/adminDashboard/AdminDashboard.jsx";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
+import { studentLoader } from "../lib/loader.js";
+
 
 function App() {
   const router = createBrowserRouter([
@@ -20,8 +22,9 @@ function App() {
           element: <RegisterPage/>
         },
         {
-          path: "/studentDashboard",
-          element: <StudentDasboard/>
+          path: "/studentDashboard/:id",
+          element: <StudentDasboard/>,
+          loader: studentLoader
         },
         {
           path: "/adminDashboard",

@@ -98,9 +98,9 @@ const login = async (req, res)=>{
 
 const adminLogin = (req, res)=>{
     const {username, password} = req.body;
-
+    
     try{
-        if(username!="admin" || password!="admin"){
+        if(username!=="admin" || password!=="admin"){
             return res.status(401).json({message: "Invalid Credentials!"});
         }
 

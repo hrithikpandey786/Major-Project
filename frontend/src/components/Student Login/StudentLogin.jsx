@@ -5,7 +5,7 @@ import apiRequest from '../../../lib/apiRequest.js';
 import { AuthContext } from '../../../context/AuthContext.jsx';
 
 function StudentLogin() {
-    const {updateUser} = React.useContext(AuthContext);
+    const {currentUser, updateUser} = React.useContext(AuthContext);
     const navigate = useNavigate();
     const [isDisabled, setIsDisabled] = React.useState(false);
     const [error, setError] = React.useState("");
@@ -34,7 +34,7 @@ function StudentLogin() {
                 isAdmin: false
             })
             
-            navigate("/studentDashboard");
+            navigate(`/studentDashboard/${data.id}`);
         } catch(err){
             console.log(err);
             setError(err.response.data.message);
