@@ -67,45 +67,58 @@ const login = async (req, res)=>{
     const {enrolmentNo, password} = req.body;
 
     try{
-        const student = await prisma.registeredStudent.findUnique({
+        const registeredStudent = await prisma.registeredStudent.findUnique({
             where:{
                 enrolmentNo
             }
         })
 
-        if(!student){
+        if(!registeredStudent){
             return res.status(401).json({message: "Student not registered"});
         }
 
-        const isPasswordValid = await bcrypt.compare(password, student.password);
+        const isPasswordValid = await bcrypt.compare(password, registeredStudent.password);
         
         if(!isPasswordValid){
             return res.status(401).json({message: "Invalid credentials"});
         }
 
-        const token = jwt.sign({id: student.id, isAdmin: false}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
+        const token = jwt.sign({id: registeredStudent.id, isAdmin: false}, process.env.JWT_SECRET_KEY, {expiresIn: '1d'});
         const age = 1000*60*60*24*7
 
         return res.cookie('token', token, {
             httpOnly: true,
             maxAge: age
-        }).status(200).json(student);
+        }).status(200).json(registeredStudent);
     } catch(err){
         console.log(err);
         res.status(500).json({message: "Failed to login"})
     }
 }
 
-const adminLogin = (req, res)=>{
+
+
+const adminLogin = async (req, res)=>{
     const {username, password} = req.body;
     
     try{
-        if(username!=="admin" || password!=="admin"){
+        if(password!=="admin"){
+            return res.status(401).json({message: "Invalid Credentials!"});
+        }
+
+        const faculty = await prisma.faculty.findUnique({
+            where:{
+                username
+            }
+        })
+
+        if(!faculty){
             return res.status(401).json({message: "Invalid Credentials!"});
         }
 
         const token = jwt.sign({
             id: "001",
+            name: faculty.facultyName,
             isAdmin: true
         }, process.env.JWT_SECRET_KEY, {expiresIn: "1h"});
 
@@ -114,7 +127,7 @@ const adminLogin = (req, res)=>{
         return res.cookie("token", token, {
             httpOnly: true,
             maxAge: age
-        }).status(200).json({message: "Login successful"});
+        }).status(200).json(faculty);
     } catch(err){
         console.log(err);
         res.status(500).json({message: "Failed to login"});

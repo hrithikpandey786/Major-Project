@@ -1,11 +1,11 @@
-import "./studentDashboard.scss";
+import "./degreeRequestPage.scss";
 import React, { useState, useEffect } from 'react';
 import {useNavigate, useLoaderData } from "react-router-dom";
 import apiRequest from "../../../lib/apiRequest";
 import { AuthContext } from "../../../context/AuthContext";
 import Razorpay from "razorpay";
 
-function StudentDashboard() {
+function DegreeRequestPage() {
     const {updateUser} = React.useContext(AuthContext);
     const studentData = useLoaderData();
     const [reappearance, setReappearance]= useState("no");
@@ -16,6 +16,8 @@ function StudentDashboard() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = React.useState({
+        fatherName: "",
+        motherName: "",
         resultDate: "",
         address: "",
         pincode: "",
@@ -84,19 +86,7 @@ function StudentDashboard() {
     }
 
 
-    
-    async function handlePayment() {
-        try {
-            const { data } = await apiRequest.post('/payment/orders', { amount: 500 });
-            console.log('Order Data:', data);
-            initPayment(data.data);
-        } catch (error) {
-            console.error('Error in handlePayment:', error);
-        }
-    }
-    
     async function initPayment(data) {
-        console.log('Payment Data:', data);
     
         const options = {
             key: 'rzp_test_1UwxfTo7kDTnG5',
@@ -108,7 +98,6 @@ function StudentDashboard() {
             handler: async (response) => {
                 try {
                     const { data } = await apiRequest.post('/payment/verify', response);
-                    console.log('Verification Response:', data);
                 } catch (err) {
                     console.error('Error in handler:', err);
                 }
@@ -131,13 +120,24 @@ function StudentDashboard() {
             console.error('Razorpay SDK not loaded');
         }
     }
+
+    
+    async function handlePayment() {
+        try {
+            const { data } = await apiRequest.post('/payment/orders', { amount: 500 });
+            
+            initPayment(data.data);
+        } catch (error) {
+            console.error('Error in handlePayment:', error);
+        }
+    }
     
     if (!studentInfo) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="studentDashboardContainer">
+        <div className="degreeRequestContainer">
             <h2>Apply for Degree</h2>
             <div className="student-info">
                 <div className="detailSection">
@@ -151,7 +151,7 @@ function StudentDashboard() {
                             id="fatherName"
                             name="fatherName"
                             // value={formData.pincode}
-                            placeholder={studentInfo.student&&studentInfo.student.pincode||"Enter Father Name"}
+                            placeholder={studentInfo.student&&studentInfo.student.fatherName||"Enter Father's Name"}
                             disabled={studentInfo.student?true:false}
                             onChange={handleChange}
                             required
@@ -164,7 +164,7 @@ function StudentDashboard() {
                             id="motherName"
                             name="motherName"
                             // value={formData.pincode}
-                            placeholder={studentInfo.student&&studentInfo.student.pincode||"Enter Mother Name"}
+                            placeholder={studentInfo.student&&studentInfo.student.motherName||"Enter Mother's Name"}
                             disabled={studentInfo.student?true:false}
                             onChange={handleChange}
                             required
@@ -192,7 +192,6 @@ function StudentDashboard() {
                     <p className="field">Course: </p><p>{studentInfo.registeredStudent.course}</p>
                     </div>
                     
-                    {/* <p><strong>Roll No:</strong> {studentInfo.rollNo}</p> */}
                     
                         <div className="item">
                         <label htmlFor="address">Address:</label>
@@ -248,6 +247,7 @@ function StudentDashboard() {
                             disabled={studentInfo.student?true:false}
                                 onChange={handleChange}
                                 className="resultDate"
+                                max="2024-06-30"
                                 required
                             />
                         </div>
@@ -292,12 +292,12 @@ function StudentDashboard() {
             </div>
             <div className="buttons">
                 <div className="degreeOptions">
-                {!studentInfo.student
-                ?<button onClick={handleSubmit} disabled={isDisabled}>Apply for Degree</button>
-                :<button onClick={()=>{}}>Check Status</button>}
+                    <button onClick={handlePayment}>Pay</button>
+                    {!studentInfo.student
+                        ?<button onClick={handleSubmit} disabled={isDisabled}>Submit</button>
+                        :<button onClick={()=>{}}>Check Status</button>}                
                 </div>
-                <button onClick={handlePayment}>Payment</button>
-                <button onClick={handleLogout} disabled={isDisabled}>Logout</button>
+                    <button onClick={handleLogout} disabled={isDisabled}>Logout</button>
             </div>
 
             {error && <span>{error}</span>}
@@ -305,5 +305,5 @@ function StudentDashboard() {
     );
 }
 
-export default StudentDashboard;
+export default DegreeRequestPage;
 

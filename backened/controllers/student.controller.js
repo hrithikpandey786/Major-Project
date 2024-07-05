@@ -42,6 +42,25 @@ const getStudent = async (req, res)=>{
 //     }
 // }
 
+
+const addFaculty = async (req, res) =>{
+    const {username, facultyName} = req.body;
+
+    try{
+        const faculty = await prisma.faculty.create({
+            data:{
+                username, facultyName
+            }
+        });
+
+        res.status(200).json(faculty);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Failed to add faculty"});
+    }
+}
+
+
 const addStudent = async (req, res)=>{
     const data = req.body;
     
@@ -61,4 +80,4 @@ const addStudent = async (req, res)=>{
     }
 }
 
-module.exports = {getStudent, addStudent};
+module.exports = {getStudent, addStudent, addFaculty};

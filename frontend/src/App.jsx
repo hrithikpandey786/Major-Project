@@ -1,8 +1,10 @@
 import Layout from "./routes/Layout/Layout";
 import HomePage from "./routes/homePage/HomePage";
 import RegisterPage from "./routes/Register Page/RegisterPage";
-import StudentDasboard from "./routes/StudentDashboard/StudentDashboard";
+import DegreeRequestPage from "./routes/DegreeRequestPage/DegreeRequestPage.jsx";
+import MigrationRequestPage from "./routes/MigrationRequestPage/MigrationRequestPage.jsx";
 import AdminDashboard from "./routes/adminDashboard/AdminDashboard.jsx";
+import OptionPage from "./routes/OptionPage/OptionPage.jsx";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { studentLoader } from "../lib/loader.js";
 
@@ -22,13 +24,22 @@ function App() {
           element: <RegisterPage/>
         },
         {
-          path: "/studentDashboard/:id",
-          element: <StudentDasboard/>,
+          path: "/degreeRequest/:id",
+          element: <DegreeRequestPage/>,
+          loader: studentLoader
+        },
+        {
+          path: "/migrationRequest/:id",
+          element: <MigrationRequestPage/>,
           loader: studentLoader
         },
         {
           path: "/adminDashboard",
           element: <AdminDashboard/>
+        },
+        {
+          path: "/optionPage/:id",
+          element: <OptionPage/>
         }
       ]
     }

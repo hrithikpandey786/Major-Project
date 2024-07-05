@@ -1,4 +1,4 @@
-.studentDashboardContainer{
+.degreeRequestContainer{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,14 +86,15 @@
     .buttons{
         display: flex;
         justify-content: space-between;
+        align-items: center;
         padding: 0px 50px;
         width: 100%;
 
         .degreeOptions{
-            gap: 50px;
+            gap: 10px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            // justify-content: space-between;
             width: 500px;
 
             button{
@@ -118,7 +119,6 @@
                 cursor: not-allowed;
             }
         }
-        
     }
 
     span{

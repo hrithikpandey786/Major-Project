@@ -47,7 +47,7 @@ export default function RegisterPage(){
     };
 
         const courses = {
-            'Information Technology and Computer Science': ['MCA', 'M.TECH', 'B.TECH'],
+            'Information Technology and Computer Application': ['MCA', 'M.TECH', 'B.TECH'],
             'Computer Science Engineering': ['B.TECH', 'M.TECH'],
             'Electrical Engineering': ['B.TECH', 'M.TECH'],
             'Mechanical Engineering': ['B.TECH', 'M.TECH', 'PhD'],
@@ -55,7 +55,7 @@ export default function RegisterPage(){
             'Physics and Material Science': ['B.TECH', 'M.TECH', 'MSc', 'PhD'],
             'Chemical Engineering': ['B.TECH'],
             'Managemnet Studies': ['BBA', 'MBA'],
-            'Chemistry and Environment Science': ['MSc', 'PhD'],
+            'Chemistry and Environmental Science': ['MSc', 'PhD'],
             'Mathematics and Scientific Computing': ['MSc', 'PhD'],
             'Department of Pharmacy': ['B.Pharma']
         };
@@ -149,7 +149,7 @@ export default function RegisterPage(){
                         required
                     >
                         <option value="">Select a department</option>
-                        <option value="Information Technology and Computer Science">Information Technology and Computer Science</option>
+                        <option value="Information Technology and Computer Application">Information Technology and Computer Application</option>
                         <option value="Computer Science Engineering">Computer Science Engineering</option>
                         <option value="Electrical Engineering">Electrical Engineering</option>
                         <option value="Mechanical Engineering">Mechanical Engineering</option>
@@ -157,7 +157,7 @@ export default function RegisterPage(){
                         <option value="Physics and Material Science">Physics and Material Science</option>
                         <option value="Chemical Engineering">Chemical Engineering</option>
                         <option value="Managemnet Studies">Managemnet Studies</option>
-                        <option value="Chemistry and Environment Science">Chemistry and Environment Science</option>
+                        <option value="Chemistry and Environmental Science">Chemistry and Environmental Science</option>
                         <option value="Mathematics and Scientific Computing">Mathematics and Scientific Computing</option>
                         <option value="Department of Pharmacy">Department of Pharmacy</option>
                     </select>

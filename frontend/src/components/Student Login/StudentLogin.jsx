@@ -34,7 +34,7 @@ function StudentLogin() {
                 isAdmin: false
             })
             
-            navigate(`/studentDashboard/${data.id}`);
+            navigate(`/optionPage/${data.id}`);
         } catch(err){
             console.log(err);
             setError(err.response.data.message);

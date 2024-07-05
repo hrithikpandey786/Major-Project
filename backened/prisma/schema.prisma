@@ -13,19 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Department{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  name String @unique
-  course Course[]
-}
-
-model Course{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  deptId String @db.ObjectId
-  department Department @relation(fields: [deptId], references: [id])
-  name String
-}
-
 model EnrolledStudent{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   enrolmentNo Int @unique
@@ -50,6 +37,8 @@ model Student{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   enrolmentNo Int @unique
   name String
+  fatherName String
+  motherName String
   dob DateTime @db.Date
   email String @unique
   phoneNumber Int @unique
@@ -58,10 +47,17 @@ model Student{
   gender String
   admissionYear Int
   resultDate DateTime @db.Date
-  status String @default("Pending")
+  status String @default("Pending at Department")
   address String
   pincode Int
+  type String
   reappearance String
+}
+
+model Faculty{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  facultyName String @unique
 }
 
 

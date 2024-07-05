@@ -21,16 +21,16 @@ function AdminLogin() {
         const password = formData.get("password");
         
         try{
-            await apiRequest.post("/auth/adminLogin", {
+            const faculty = await apiRequest.post("/auth/adminLogin", {
                 username, password
             })
 
             updateUser({
                 id: "001",
-                name: "admin",
+                name: faculty.data.facultyName,
                 isAdmin: true
             })
-
+            
             navigate("adminDashboard");  
         } catch(err){
             console.log(err);
