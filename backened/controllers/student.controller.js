@@ -80,4 +80,28 @@ const addStudent = async (req, res)=>{
     }
 }
 
-module.exports = {getStudent, addStudent, addFaculty};
+
+const getStatus = async (req, res) =>{
+    const id = req.userId;
+    
+    try{
+        const registerdStudent = await prisma.registeredStudent.findUnique({
+            where:{
+                id
+            }
+        })
+
+        const student = await prisma.student.findUnique({
+            where:{
+                enrolmentNo: registerdStudent.enrolmentNo
+            }
+        })
+
+        res.status(200).json(student.status);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Failed to get status"});
+    }
+}
+
+module.exports = {getStudent, addStudent, addFaculty, getStatus};

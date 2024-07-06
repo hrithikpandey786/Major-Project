@@ -6,7 +6,7 @@ import MigrationRequestPage from "./routes/MigrationRequestPage/MigrationRequest
 import AdminDashboard from "./routes/adminDashboard/AdminDashboard.jsx";
 import OptionPage from "./routes/OptionPage/OptionPage.jsx";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { studentLoader } from "../lib/loader.js";
+import { degreeLoader, migrationLoader } from "../lib/loader.js";
 
 
 function App() {
@@ -26,12 +26,12 @@ function App() {
         {
           path: "/degreeRequest/:id",
           element: <DegreeRequestPage/>,
-          loader: studentLoader
+          loader: degreeLoader
         },
         {
           path: "/migrationRequest/:id",
           element: <MigrationRequestPage/>,
-          loader: studentLoader
+          loader: migrationLoader
         },
         {
           path: "/adminDashboard",

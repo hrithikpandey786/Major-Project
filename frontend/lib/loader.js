@@ -1,12 +1,25 @@
 import apiRequest from "../lib/apiRequest.js";
 
-export const studentLoader = async ({request, params}) =>{
+export const migrationLoader = async ({request, params}) =>{
     const id = params.id;
     
     try{
-        const studentData = await apiRequest.get(`/student/${id}`);
+        const migrationRequest = await apiRequest.get(`/migration/${id}`);
         
-        return studentData;
+        return migrationRequest;
+    } catch(err){
+        console.log(err);
+        return null;
+    }
+}
+
+export const degreeLoader = async ({request, params}) =>{
+    const id = params.id;
+    
+    try{
+        const degreeRequest = await apiRequest.get(`/degree/${id}`);
+        
+        return degreeRequest;
     } catch(err){
         console.log(err);
         return null;

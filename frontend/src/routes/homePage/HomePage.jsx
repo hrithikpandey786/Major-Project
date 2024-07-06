@@ -8,7 +8,7 @@ function HomePage() {
 
     return (
         <div className="home-container">
-            <h1>Degree Request Portal</h1>
+            <h1>Apply for Certificates</h1>
 
             <div className="buttons">
                 <button className={studentLogin?"studentButton active":"studentButton"} onClick={()=>setStudentLogin(true)}>Student Login</button>

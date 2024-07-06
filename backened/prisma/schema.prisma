@@ -33,7 +33,7 @@ model RegisteredStudent{
   password String
 }
 
-model Student{
+model DegreeRequest{
   id String @id @default(auto()) @map("_id") @db.ObjectId
   enrolmentNo Int @unique
   name String
@@ -50,7 +50,26 @@ model Student{
   status String @default("Pending at Department")
   address String
   pincode Int
-  type String
+  reappearance String
+}
+
+model MigrationRequest{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  enrolmentNo Int @unique
+  name String
+  fatherName String
+  motherName String
+  dob DateTime @db.Date
+  email String @unique
+  phoneNumber Int @unique
+  department String
+  course String
+  gender String
+  admissionYear Int
+  resultDate DateTime @db.Date
+  status String @default("Pending at Department")
+  address String
+  pincode Int
   reappearance String
 }
 

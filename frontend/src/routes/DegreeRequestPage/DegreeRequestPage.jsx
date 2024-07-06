@@ -11,9 +11,13 @@ function DegreeRequestPage() {
     const [reappearance, setReappearance]= useState("no");
     const [error, setError] = React.useState("");
     const [isDisabled, setIsDisabled] = React.useState(false);
+    const [isDateFilled, setIsDateFilled] = React.useState(false);
+    const [isPaymentDone, setIsPaymentDone] = React.useState(false);
     const [studentInfo, setStudentInfo] = useState(studentData.data || null);
-    console.log(studentInfo.student);
+    
     const navigate = useNavigate();
+
+    let alreadySubmitted = "";
 
     const [formData, setFormData] = React.useState({
         fatherName: "",
@@ -33,7 +37,10 @@ function DegreeRequestPage() {
         setFormData(prev=>{
             return {...prev, [name]: value}
         })
-        console.log(formData);
+
+        if(name==="resultDate"){
+            setIsDateFilled(true);
+        }
     }
     
     async function handleSubmit(){
@@ -41,8 +48,10 @@ function DegreeRequestPage() {
         setIsDisabled(true);
 
         try{
-            const newStudent = await apiRequest.post("/student/add", {
+            const newApplication = await apiRequest.post("/degree/add", {
                 name: studentInfo.registeredStudent.name,
+                fatherName: formData.fatherName,
+                motherName: formData.motherName,
                 enrolmentNo: studentInfo.registeredStudent.enrolmentNo,
                 dob: studentInfo.registeredStudent.dob.split("T")[0],
                 email: studentInfo.registeredStudent.email,
@@ -54,10 +63,11 @@ function DegreeRequestPage() {
                 gender: studentInfo.registeredStudent.gender,
                 department: studentInfo.registeredStudent.department,
                 course: studentInfo.registeredStudent.course,
-                admissionYear: parseInt(formData.admissionYear)
+                admissionYear: parseInt(formData.admissionYear),
             })
 
-            alert("Degree Request Submitted");
+            alert("Application Submitted");
+            
             window.location.reload();
         } catch(err){
             console.log(err);
@@ -85,19 +95,36 @@ function DegreeRequestPage() {
         }
     }
 
+    async function handleStatus(){
+        setError("");
+        setIsDisabled(true);
+
+        try{
+            const status = await apiRequest.get("/degree/application/status");
+            
+            setError(status.data);
+        } catch(err){
+            console.log(err);
+            setError(err.response.data.message);
+        } finally{
+            setIsDisabled(false);
+        }
+    }
+
 
     async function initPayment(data) {
-    
+        
         const options = {
             key: 'rzp_test_1UwxfTo7kDTnG5',
             name: "MMMUT Degree Fee",
-            amount: data.amount,
+            amount: 1000,
             currency: data.currency,
             description: "Test transaction",
             order_id: data.id,
             handler: async (response) => {
                 try {
                     const { data } = await apiRequest.post('/payment/verify', response);
+                    setIsPaymentDone(true);
                 } catch (err) {
                     console.error('Error in handler:', err);
                 }
@@ -107,7 +134,6 @@ function DegreeRequestPage() {
             },
         };
     
-        console.log('Razorpay Options:', options);
     
         if (typeof window.Razorpay === 'function') {
             try {
@@ -123,8 +149,10 @@ function DegreeRequestPage() {
 
     
     async function handlePayment() {
+        setError("");
+
         try {
-            const { data } = await apiRequest.post('/payment/orders', { amount: 500 });
+            const { data } = await apiRequest.post('/payment/orders', { amount: 1000 }); 
             
             initPayment(data.data);
         } catch (error) {
@@ -138,7 +166,7 @@ function DegreeRequestPage() {
 
     return (
         <div className="degreeRequestContainer">
-            <h2>Apply for Degree</h2>
+            <h2>Application for Degree</h2>
             <div className="student-info">
                 <div className="detailSection">
                     <div className="item">
@@ -151,8 +179,8 @@ function DegreeRequestPage() {
                             id="fatherName"
                             name="fatherName"
                             // value={formData.pincode}
-                            placeholder={studentInfo.student&&studentInfo.student.fatherName||"Enter Father's Name"}
-                            disabled={studentInfo.student?true:false}
+                            placeholder={studentInfo.request&&studentInfo.request.fatherName||"Enter Father's Name"}
+                            disabled={studentInfo.request?true:false}
                             onChange={handleChange}
                             required
                         />
@@ -164,8 +192,8 @@ function DegreeRequestPage() {
                             id="motherName"
                             name="motherName"
                             // value={formData.pincode}
-                            placeholder={studentInfo.student&&studentInfo.student.motherName||"Enter Mother's Name"}
-                            disabled={studentInfo.student?true:false}
+                            placeholder={studentInfo.request&&studentInfo.request.motherName||"Enter Mother's Name"}
+                            disabled={studentInfo.request?true:false}
                             onChange={handleChange}
                             required
                         />
@@ -199,8 +227,8 @@ function DegreeRequestPage() {
                             id="address"
                             name="address"
                             // value={formData.address}
-                            placeholder={studentInfo.student&&studentInfo.student.address||"Enter Address"}
-                            disabled={studentInfo.student?true:false}
+                            placeholder={studentInfo.request&&studentInfo.request.address||"Enter Address"}
+                            disabled={studentInfo.request?true:false}
                             onChange={handleChange}
                             required
                         ></textarea>
@@ -213,8 +241,8 @@ function DegreeRequestPage() {
                             id="pincode"
                             name="pincode"
                             // value={formData.pincode}
-                            placeholder={studentInfo.student&&studentInfo.student.pincode||"Enter Pincode"}
-                            disabled={studentInfo.student?true:false}
+                            placeholder={studentInfo.request&&studentInfo.request.pincode||"Enter Pincode"}
+                            disabled={studentInfo.request?true:false}
                             onChange={handleChange}
                             className="admissionYear"
                             required
@@ -229,8 +257,8 @@ function DegreeRequestPage() {
                             name="admissionYear"
                             // value={formData.admissionYear}
                             onChange={handleChange}
-                            placeholder={studentInfo.student&&studentInfo.student.admissionYear||"Enter Admission Year"}
-                            disabled={studentInfo.student?true:false}
+                            placeholder={studentInfo.request&&studentInfo.request.admissionYear||"Enter Admission Year"}
+                            disabled={studentInfo.request?true:false}
                             className="admissionYear"
                             required
                         />
@@ -243,8 +271,8 @@ function DegreeRequestPage() {
                                 id="resultDate"
                                 name="resultDate"
                                 // value={formData.resultDate}
-                                placeholder={studentInfo.student&&studentInfo.student.resultDate.split("T")[0]||""}
-                            disabled={studentInfo.student?true:false}
+                                placeholder={studentInfo.request&&studentInfo.request.resultDate.split("T")[0]||""}
+                                disabled={studentInfo.request?true:false}
                                 onChange={handleChange}
                                 className="resultDate"
                                 max="2024-06-30"
@@ -261,11 +289,11 @@ function DegreeRequestPage() {
                             id="yes"
                             type="radio"
                             name="reappearance"
-                            disabled={studentInfo.student?true:false}
+                            disabled={studentInfo.request?true:false}
                             // value="yes"
                             onClick={()=>setReappearance("yes")}
                             // onChange={handleChange}
-                                required
+                            required
                         />
                         <label htmlFor="yes">Yes</label>
                     </div>
@@ -275,7 +303,7 @@ function DegreeRequestPage() {
                                 type="radio"
                                 name="reappearance"
                                 // value="no"
-                                disabled={studentInfo.student?true:false}
+                                disabled={studentInfo.request?true:false}
                                 onClick={()=>setReappearance("no")}
                                 // onChange={handleChange}
                                 required
@@ -292,10 +320,10 @@ function DegreeRequestPage() {
             </div>
             <div className="buttons">
                 <div className="degreeOptions">
-                    <button onClick={handlePayment}>Pay</button>
-                    {!studentInfo.student
-                        ?<button onClick={handleSubmit} disabled={isDisabled}>Submit</button>
-                        :<button onClick={()=>{}}>Check Status</button>}                
+                    <button onClick={handlePayment} disabled={!isDateFilled || isDisabled}>Pay</button>
+                    {!studentInfo.request
+                        ?<button onClick={handleSubmit} disabled={isDisabled || !isPaymentDone}>Submit</button>
+                        :<button onClick={handleStatus} disabled={isDisabled}>Check Status</button>}                
                 </div>
                     <button onClick={handleLogout} disabled={isDisabled}>Logout</button>
             </div>

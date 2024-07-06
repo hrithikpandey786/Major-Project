@@ -9,7 +9,7 @@ export default function OptionPage(){
     
     return(
         <div className="optionPageContainer">
-            <h2>Applying for</h2>
+            <h2>Applying/Applied for</h2>
                 <Link to={`/degreeRequest/${id}`}>
                     <button>Degree</button>
                 </Link>

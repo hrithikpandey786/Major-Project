@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const authRoute = require("./routes/auth.route.js");
 const studentRoute = require("./routes/student.route.js");
+const migrationRoute = require("./routes/migration.route.js");
+const degreeRoute = require("./routes/degree.route.js");
 const prisma = require("./lib/prisma.js");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -15,9 +17,13 @@ app.use(express.json());
 app.use(cookieParser());
 dotenv.config();
 
+
 app.use("/api/payment", paymentRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/student", studentRoute);
+app.use("/api/migration", migrationRoute);
+app.use("/api/degree", degreeRoute);
+
 
 app.listen(8800, ()=>{
     console.log("Server is listening to the port 8800...");
