@@ -53,12 +53,15 @@ export default function AdminDashboard(){
         let statusFilter = "";
         let approved = "";
         let departmentFilter = "";
+        let rejected = "";
+
         
         if(currentUser.name==="Dean UG Office"){
           statusFilter = "Pending at Dean UG Office"
         } else if(currentUser.name==="Registrar Office"){
           statusFilter = "Pending at Registrar Office";
           approved = "Approved";
+          rejected = "Rejected";
         } else if(currentUser.name==="Dean PG Office"){
           statusFilter = "Pending at Dean PG Office"
         } 
@@ -75,7 +78,7 @@ export default function AdminDashboard(){
           //     (departmentFilter&&departmentFilter+request.department===currentUser.name)
           //   });
           
-          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
+          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved||request.status===rejected)
           
           if(departmentFilter){
             filtered = filtered.filter((request)=>departmentFilter+request.department===currentUser.name)
@@ -96,12 +99,15 @@ export default function AdminDashboard(){
         let statusFilter = "";
         let approved = "";
         let departmentFilter = "";
-        
+        let rejected = "";
+
+
         if(currentUser.name==="Dean UG Office"){
           statusFilter = "Pending at Dean UG Office"
         } else if(currentUser.name==="Registrar Office"){
           statusFilter = "Pending at Registrar Office";
           approved = "Approved";
+          rejected = "Rejected"
         } else if(currentUser.name==="Dean PG Office"){
           statusFilter = "Pending at Dean PG Office"
         } 
@@ -114,7 +120,7 @@ export default function AdminDashboard(){
           const requests = await apiRequest.get("/migration/");
           
           
-          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
+          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved || request.status===rejected);
           
           if(departmentFilter){
             filtered = filtered.filter((request)=>departmentFilter+request.department===currentUser.name)

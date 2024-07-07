@@ -33,12 +33,14 @@ export const fetchDegreeRequests = async ({request, params}) =>{
     let statusFilter = "";
     let approved = "";
     let departmentFilter = "";
+    let rejected = "";
     
     if(decodedName==="Dean UG Office"){
       statusFilter = "Pending at Dean UG Office"
     } else if(decodedName==="Registrar Office"){
       statusFilter = "Pending at Registrar Office";
       approved = "Approved";
+      rejected = "Rejected";
     } else if(decodedName==="Dean PG Office"){
       statusFilter = "Pending at Dean PG Office"
     } 
@@ -50,7 +52,7 @@ export const fetchDegreeRequests = async ({request, params}) =>{
     try{
       const requests = await apiRequest.get("/degree/");
       
-      let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
+      let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved || request.status===rejected);
       
       if(departmentFilter){
         filtered = filtered.filter((request)=>departmentFilter+request.department===decodedName)
