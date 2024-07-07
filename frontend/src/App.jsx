@@ -1,4 +1,4 @@
-import Layout from "./routes/Layout/Layout";
+import {Layout, RequireAdminAuth, RequireStudentAuth} from "./routes/Layout/Layout";
 import HomePage from "./routes/homePage/HomePage";
 import RegisterPage from "./routes/Register Page/RegisterPage";
 import DegreeRequestPage from "./routes/DegreeRequestPage/DegreeRequestPage.jsx";
@@ -24,6 +24,32 @@ function App() {
           path: "/register",
           element: <RegisterPage/>
         },
+      ]
+    },
+    {
+      path: "/",
+      element: <RequireAdminAuth/>,
+      children:[
+        {
+          path: "/studentDetail/:enrolmentNo",
+          element: <StudentDetailPage/>,
+          loader: fetchStudentDetails
+        },
+        {
+          path: "/adminDashboard",
+          element: <AdminDashboard/>,
+          loader: fetchDegreeRequests
+        }
+    ]
+    },
+    {
+      path:"/",
+      element: <RequireStudentAuth/>,
+      children: [
+        {
+          path: "/optionPage/:id",
+          element: <OptionPage/>
+        },
         {
           path: "/degreeRequest/:id",
           element: <DegreeRequestPage/>,
@@ -33,21 +59,8 @@ function App() {
           path: "/migrationRequest/:id",
           element: <MigrationRequestPage/>,
           loader: migrationLoader
-        },
-        {
-          path: "/adminDashboard",
-          element: <AdminDashboard/>,
-          loader: fetchDegreeRequests
-        },
-        {
-          path: "/optionPage/:id",
-          element: <OptionPage/>
-        },
-        {
-          path: "/studentDetail/:enrolmentNo",
-          element: <StudentDetailPage/>,
-          loader: fetchStudentDetails
         }
+        
       ]
     }
   ])
