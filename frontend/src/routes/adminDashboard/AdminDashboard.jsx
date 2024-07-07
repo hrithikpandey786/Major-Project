@@ -159,7 +159,7 @@ export default function AdminDashboard(){
             {
               
               data.map((data, index)=>{
-                return <TableData data={data} key={index}/>
+                return <TableData data={data} key={index} type={degreeReq?"degree":"migration"}/>
               })
             }
           </tbody>

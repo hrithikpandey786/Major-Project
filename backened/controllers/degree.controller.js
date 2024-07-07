@@ -84,4 +84,22 @@ const getStatus = async (req, res) =>{
 }
 
 
-module.exports = {getDegreeRequests, getDegreeRequest, addDegreeRequest, getStatus};
+const getDegreeDetail = async (req, res) =>{
+    const enrolmentNo = parseInt(req.params.enrolmentNo);
+    
+    try{
+        const studentDetail = await prisma.degreeRequest.findUnique({
+            where:{
+                enrolmentNo
+            }
+        })
+
+        res.status(200).json(studentDetail);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Failed to fetch details"});
+    }
+}
+
+
+module.exports = {getDegreeRequests, getDegreeRequest, addDegreeRequest, getDegreeDetail, getStatus};

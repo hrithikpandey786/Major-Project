@@ -68,3 +68,24 @@ export const fetchDegreeRequests = async ({request, params}) =>{
       return null;
     }
 }
+
+
+export const fetchStudentDetails = async ({request, params}) =>{
+  const enrolmentNo = params.enrolmentNo;
+  const type = request.url.split("=")[1];
+  let studentDetail;
+  // console.log(enrolmentNo);
+  try{
+    
+    if(type==="degree"){
+      studentDetail = await apiRequest.get(`/degree/data/${enrolmentNo}`);
+    } else {
+      studentDetail = await apiRequest.get(`/migration/data/${enrolmentNo}`);
+    }
+
+    return studentDetail;
+  }catch(err){
+    console.log(err);
+    return null;
+  }
+}

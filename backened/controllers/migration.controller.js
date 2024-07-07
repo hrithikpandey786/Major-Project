@@ -86,5 +86,23 @@ const getStatus = async (req, res) =>{
 }
 
 
+const getMigrationDetails = async (req, res) =>{
+    const enrolmentNo = parseInt(req.params.enrolmentNo);
+    
+    try{
+        const studentDetail = await prisma.migrationRequest.findUnique({
+            where:{
+                enrolmentNo
+            }
+        })
 
-module.exports = {getMigrationRequests, getMigrationRequest, addMigrationRequest, getStatus};
+        res.status(200).json(studentDetail);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Failed to fetch details"});
+    }
+}
+
+
+
+module.exports = {getMigrationRequests, getMigrationRequest, getMigrationDetails, addMigrationRequest, getStatus};

@@ -5,8 +5,9 @@ import DegreeRequestPage from "./routes/DegreeRequestPage/DegreeRequestPage.jsx"
 import MigrationRequestPage from "./routes/MigrationRequestPage/MigrationRequestPage.jsx";
 import AdminDashboard from "./routes/adminDashboard/AdminDashboard.jsx";
 import OptionPage from "./routes/OptionPage/OptionPage.jsx";
+import StudentDetailPage from "./routes/StudentDetailPage/StudentDetailPage.jsx";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { degreeLoader, migrationLoader, fetchDegreeRequests } from "../lib/loader.js";
+import { degreeLoader, migrationLoader, fetchDegreeRequests, fetchStudentDetails } from "../lib/loader.js";
 
 
 function App() {
@@ -41,6 +42,11 @@ function App() {
         {
           path: "/optionPage/:id",
           element: <OptionPage/>
+        },
+        {
+          path: "/studentDetail/:enrolmentNo",
+          element: <StudentDetailPage/>,
+          loader: fetchStudentDetails
         }
       ]
     }
