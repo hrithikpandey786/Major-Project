@@ -125,6 +125,7 @@ function MigrationRequestPage() {
                 try {
                     const { data } = await apiRequest.post('/payment/verify', response);
                     setIsPaymentDone(true);
+                    setIsDisabled(false);
                 } catch (err) {
                     console.error('Error in handler:', err);
                 }
@@ -149,6 +150,7 @@ function MigrationRequestPage() {
 
     
     async function handlePayment() {
+        setIsDisabled(true);
         setError("");
         const yearGap = 2024-parseInt(formData.resultDate.split(" ")[0]);
         let amt = 0;

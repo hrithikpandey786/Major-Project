@@ -8,5 +8,6 @@ router.get("/:id", controllers.getMigrationRequest);
 router.get("/data/:enrolmentNo", controllers.getMigrationDetails);
 router.get("/application/status", verifyToken, controllers.getStatus);
 router.post("/add", verifyToken, controllers.addMigrationRequest);
+router.put("/update", controllers.updateMigrationStatus);
 
 module.exports = router;

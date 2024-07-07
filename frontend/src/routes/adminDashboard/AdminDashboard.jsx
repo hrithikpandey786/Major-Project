@@ -75,7 +75,7 @@ export default function AdminDashboard(){
           //     (departmentFilter&&departmentFilter+request.department===currentUser.name)
           //   });
           
-          let filtered = requests.data.filter(request=>request.status===(statusFilter||approved))
+          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
           
           if(departmentFilter){
             filtered = filtered.filter((request)=>departmentFilter+request.department===currentUser.name)
@@ -113,18 +113,13 @@ export default function AdminDashboard(){
         try{
           const requests = await apiRequest.get("/migration/");
           
-          // const filtered = requests.data.filter((request)=> 
-          //   {request.status===statusFilter||approved && 
-          //     (departmentFilter&&departmentFilter+request.department===currentUser.name)
-          //   });
           
-          let filtered = requests.data.filter(request=>request.status===(statusFilter||approved))
+          let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
           
           if(departmentFilter){
             filtered = filtered.filter((request)=>departmentFilter+request.department===currentUser.name)
           }
 
-          console.log(filtered);
           setData(filtered);
         } catch(err){
           console.log(err);

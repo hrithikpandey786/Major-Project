@@ -104,5 +104,26 @@ const getMigrationDetails = async (req, res) =>{
 }
 
 
+const updateMigrationStatus = async (req, res) =>{
+    const {id, ...updatedMigrationRequest} = req.body.studentInfo;
+    
+    try{
+        const updatedData = await prisma.migrationRequest.update({
+            where:{
+                enrolmentNo: updatedMigrationRequest.enrolmentNo
+            },
+            data:{
+                ...updatedMigrationRequest
+            }
+        })
 
-module.exports = {getMigrationRequests, getMigrationRequest, getMigrationDetails, addMigrationRequest, getStatus};
+        res.status(200).json(updatedData);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Status Updated"});
+    }
+}
+
+
+
+module.exports = {getMigrationRequests, getMigrationRequest, getMigrationDetails, addMigrationRequest, getStatus, updateMigrationStatus};

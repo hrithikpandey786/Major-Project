@@ -50,12 +50,7 @@ export const fetchDegreeRequests = async ({request, params}) =>{
     try{
       const requests = await apiRequest.get("/degree/");
       
-      // const filtered = requests.data.filter((request)=> 
-      //   {request.status===statusFilter||approved && 
-      //     (departmentFilter&&departmentFilter+request.department===currentUser.name)
-      //   });
-      
-      let filtered = requests.data.filter(request=>request.status===statusFilter)
+      let filtered = requests.data.filter(request=>request.status===statusFilter||request.status===approved)
       
       if(departmentFilter){
         filtered = filtered.filter((request)=>departmentFilter+request.department===decodedName)

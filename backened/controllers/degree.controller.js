@@ -102,4 +102,25 @@ const getDegreeDetail = async (req, res) =>{
 }
 
 
-module.exports = {getDegreeRequests, getDegreeRequest, addDegreeRequest, getDegreeDetail, getStatus};
+const updateDegreeStatus = async (req, res) =>{
+    const {id, ...updatedDegreeRequest} = req.body.studentInfo;
+    
+    try{
+        const updatedData = await prisma.degreeRequest.update({
+            where:{
+                enrolmentNo: updatedDegreeRequest.enrolmentNo
+            },
+            data:{
+                ...updatedDegreeRequest
+            }
+        })
+
+        res.status(200).json(updatedData);
+    } catch(err){
+        console.log(err);
+        res.status(500).json({message: "Status Updated"});
+    }
+}
+
+
+module.exports = {getDegreeRequests, getDegreeRequest, addDegreeRequest, getDegreeDetail, getStatus, updateDegreeStatus};
