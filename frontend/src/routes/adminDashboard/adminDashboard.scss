@@ -6,13 +6,66 @@
     overflow: scroll;
     height: 100%;
 
-    h3{
-        font-family: Inter;
-        font-size: 27px;
-        font-weight: 500;
+    .heading{
+      background-color: #f6931d;
+      border-radius: 20px;
+      margin: 20px;
+      padding: 1px 16px;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      h3{
+        font-family:Arial, Helvetica, sans-serif;
+        color: white;
+        font-size: 25px;
+        // font-weight: 600;
         line-height: 32.68px;
         text-align: center;
-        margin-top: 60px;
+      }
+    }
+
+
+      .buttons{
+        // margin-bottom: 20px;
+        display: flex;
+        justify-content: left;
+        margin-bottom: 10px;
+        // width: 200px;
+    
+        button{
+          /* height: 40px; */
+          padding: 10px 10px;
+          font-size: 12px;
+          cursor: pointer;
+      }
+      
+      .degreeButton{
+        border: 1px solid black;
+          background-color: #f7f7f7;
+          color: black;
+          border-right: none;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+      }
+      
+      .degreeButton.active{
+          background-color: #333;
+          color: white;
+      }
+      
+      .migrationButton{
+        border: 1px solid black;
+          background-color: #f7f7f7;
+          color: black;
+          // border-left: none;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+      }
+      
+      .migrationButton.active{
+          background-color: #333;
+          color: white;
+      }
       }
 
     .tableContainer{
@@ -34,14 +87,17 @@
             
             border-radius: 15px; /* Rounded corners for the table */
             overflow: hidden; /* Needed to hide the overflow of rounded corners */
+          
           }
     }
 
-    button{
+    .logout{
       padding: 12px 20px;
       color: white;
       background-color: black;
       border-radius: 5px;
+      border: none;
+      margin: 10px;
       cursor: pointer;
 
       &:disabled{
@@ -69,6 +125,7 @@
     line-height: 35.1px;
     text-align: left;
     padding-left: 15px;
+    // align-items: center;
   }
   
   td{

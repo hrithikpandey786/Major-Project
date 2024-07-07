@@ -2,7 +2,9 @@ const {prisma} = require("../lib/prisma.js");
 
 const getDegreeRequests = async (req, res) =>{
     try{
+        const degreeRequests = await prisma.degreeRequest.findMany();
 
+        return res.status(200).json(degreeRequests);
     } catch(err){
         console.log(err);
         res.status(500).json({message: "Failed to get Degree Requests"});

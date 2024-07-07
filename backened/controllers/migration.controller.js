@@ -2,7 +2,9 @@ const {prisma} = require("../lib/prisma.js");
 
 const getMigrationRequests = async (req, res) =>{
     try{
+        const migrationRequests = await prisma.migrationRequest.findMany();
 
+        res.status(200).json(migrationRequests);
     } catch(err){
         console.log(err);
         res.status(500).json({message: "Failed to get Migration Requests"});

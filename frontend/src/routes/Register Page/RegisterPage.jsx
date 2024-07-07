@@ -48,7 +48,7 @@ export default function RegisterPage(){
 
         const courses = {
             'Information Technology and Computer Application': ['MCA', 'M.TECH', 'B.TECH'],
-            'Computer Science Engineering': ['B.TECH', 'M.TECH'],
+            'Computer Science and Engineering': ['B.TECH', 'M.TECH'],
             'Electrical Engineering': ['B.TECH', 'M.TECH'],
             'Mechanical Engineering': ['B.TECH', 'M.TECH', 'PhD'],
             'Civil Engineering': ['B.TECH', 'M.TECH'],
@@ -57,7 +57,7 @@ export default function RegisterPage(){
             'Managemnet Studies': ['BBA', 'MBA'],
             'Chemistry and Environmental Science': ['MSc', 'PhD'],
             'Mathematics and Scientific Computing': ['MSc', 'PhD'],
-            'Department of Pharmacy': ['B.Pharma']
+            'Pharmacy': ['B.Pharma']
         };
     
         return (
@@ -150,7 +150,7 @@ export default function RegisterPage(){
                     >
                         <option value="">Select a department</option>
                         <option value="Information Technology and Computer Application">Information Technology and Computer Application</option>
-                        <option value="Computer Science Engineering">Computer Science Engineering</option>
+                        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
                         <option value="Electrical Engineering">Electrical Engineering</option>
                         <option value="Mechanical Engineering">Mechanical Engineering</option>
                         <option value="Civil Engineering">Civil Engineering</option>
@@ -159,7 +159,7 @@ export default function RegisterPage(){
                         <option value="Managemnet Studies">Managemnet Studies</option>
                         <option value="Chemistry and Environmental Science">Chemistry and Environmental Science</option>
                         <option value="Mathematics and Scientific Computing">Mathematics and Scientific Computing</option>
-                        <option value="Department of Pharmacy">Department of Pharmacy</option>
+                        <option value="Pharmacy">Pharmacy</option>
                     </select>
                     </div>
                     

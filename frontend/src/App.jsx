@@ -6,7 +6,7 @@ import MigrationRequestPage from "./routes/MigrationRequestPage/MigrationRequest
 import AdminDashboard from "./routes/adminDashboard/AdminDashboard.jsx";
 import OptionPage from "./routes/OptionPage/OptionPage.jsx";
 import { createBrowserRouter, RouterProvider} from "react-router-dom";
-import { degreeLoader, migrationLoader } from "../lib/loader.js";
+import { degreeLoader, migrationLoader, fetchDegreeRequests } from "../lib/loader.js";
 
 
 function App() {
@@ -35,7 +35,8 @@ function App() {
         },
         {
           path: "/adminDashboard",
-          element: <AdminDashboard/>
+          element: <AdminDashboard/>,
+          loader: fetchDegreeRequests
         },
         {
           path: "/optionPage/:id",

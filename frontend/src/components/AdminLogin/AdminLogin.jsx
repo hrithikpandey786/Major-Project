@@ -7,7 +7,7 @@ import apiRequest from '../../../lib/apiRequest';
 function AdminLogin() {
     const [error, setError] = React.useState("");
     const [isDisabled, setIsDisabled] = React.useState(false);
-    const {updateUser} = React.useContext(AuthContext);
+    const {updateUser, currentUser} = React.useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -31,7 +31,7 @@ function AdminLogin() {
                 isAdmin: true
             })
             
-            navigate("adminDashboard");  
+            navigate(`adminDashboard?name=${faculty.data.facultyName}`);  
         } catch(err){
             console.log(err);
             setError(err.response.data.message);
