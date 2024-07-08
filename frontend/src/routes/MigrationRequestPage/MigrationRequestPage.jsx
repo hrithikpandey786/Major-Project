@@ -113,9 +113,10 @@ function MigrationRequestPage() {
 
 
     async function initPayment(data) {
-        
+        const key_id = import.meta.env.KEY_ID;
+
         const options = {
-            key: 'rzp_test_1UwxfTo7kDTnG5',
+            key: key_id,
             name: "MMMUT Degree Fee",
             amount: 1000,
             currency: data.currency,

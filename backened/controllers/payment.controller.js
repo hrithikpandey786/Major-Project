@@ -3,11 +3,11 @@ const crypto = require("crypto");
 
 
 const order = async (req, res) =>{
-    console.log("request body", req.body);
+    
     try{
         const instance = new Razorpay({
-            key_id: "rzp_test_1UwxfTo7kDTnG5",
-            key_secret: "J188LsgVGBDXAE5F5ZyPMpKr"
+            key_id: process.env.KEY_ID,
+            key_secret: process.env.SECRET_KEY
         });
 
         const options = {
